@@ -2,7 +2,7 @@
 #### 部分说明：
 - 使用 Modules 包管理器管理 packages 依赖，使用说明如下（以demo1为例）：
 
-  - 提前配好`GOPROXY`环境变量，使用 GoCenter 加速依赖包下载
+  - 提前配好`GOPROXY`环境变量，使用 goproxy.io 加速依赖包下载
   - 复制仓库中的`demo01`至任意目录，进入该目录执行初始化：`go mod init demo01`，加载依赖：`go mod tidy`；
   - 整个目录全局修改`apiserver`为`demo1`（搜索替换）
   - 编译：`go build main.go`，运行编译结果(Windows下)：`main.exe`
