@@ -38,7 +38,6 @@ func Secure(c *gin.Context) {
 	if c.Request.TLS != nil {
 		c.Header("Strict-Transport-Security", "max-age=31536000")
 	}
-
-	// Also consider adding Content-Security-Policy headers
+	// 也可以考虑添加 Content-Security-Policy headers 白名单header头信息
 	// c.Header("Content-Security-Policy", "script-src 'self' https://cdnjs.cloudflare.com")
 }
