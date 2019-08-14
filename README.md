@@ -6,6 +6,7 @@
   - 复制仓库中的`demo01`至任意目录，进入该目录执行初始化：`go mod init demo01`，加载依赖：`go mod tidy`；
   - 整个目录全局修改`apiserver`为`demo1`（搜索替换）
   - 编译：`go build main.go`，运行编译结果(Windows下)：`main.exe`
+- 基于go 1.12及以上版本
 
 ---
 #### 目录说明
