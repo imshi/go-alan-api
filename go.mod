@@ -7,6 +7,7 @@ require (
 	github.com/gin-gonic/gin v1.4.0 // indirect
 	github.com/go-ole/go-ole v1.2.4 // indirect
 	github.com/shirou/gopsutil v2.18.12+incompatible // indirect
+	github.com/spf13/viper v1.4.0 // indirect
 	golang.org/x/crypto v0.0.0-20190701094942-4def268fd1a4 // indirect
 	golang.org/x/lint v0.0.0-20190409202823-959b441ac422 // indirect
 	golang.org/x/net v0.0.0-20190813141303-74dc4d7220e7 // indirect
