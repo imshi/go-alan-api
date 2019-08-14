@@ -15,6 +15,7 @@ import (
 	"github.com/shirou/gopsutil/mem"
 )
 
+// unit
 const (
 	B  = 1
 	KB = 1024 * B
