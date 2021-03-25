@@ -8,12 +8,12 @@
   - 编译：`go build -v main.go`，制品位置(Windows下)：`sample-api.exe`；linux下：`sample-api`
   - 编译运行示例：
     - Windows下：双击 exe 文件
-    - linux下：./sample-api
+    - linux下：`./sample-api`
 - 基于go 1.12及以上版本
 
 ---
 #### 目录说明
 - **sample-api**：实现一个基础的 RESTfulAPI 服务器
 - **configuration-read**：使用 Viper 包进行配置文件读取
-  - 调试运行示例(Linux)：go run main.go -c /tmp/apidemo/config.yaml
+  - 调试运行示例(Linux)：`go run main.go -c /tmp/apidemo/config.yaml`
 - **log-record**：使用 lexkong/log 包进行日志输出格式定制
