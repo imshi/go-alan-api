@@ -33,7 +33,7 @@ func main() {
 		middlewares...,
 	)
 
-	// Ping the server to make sure the router is working.
+	// 通过访问 pingServer() 函数 验证 API Server 是否工作正常
 	go func() {
 		if err := pingServer(); err != nil {
 			log.Fatal("The router has no response, or it might took too long to start up.", err)
@@ -46,17 +46,17 @@ func main() {
 	log.Printf(http.ListenAndServe(":8080", g).Error())
 }
 
-// pingServer pings the http server to make sure the router is working.
+// pingServer函数通过访问 /sd/health接口验证 API Server 是否工作正常
 // pingServer函数向/sd/health发送GET请求，如果函数正确执行并且返回的 HTTP StatusCode 为 200，则说明 API 服务器可用，pingServer函数输出部署成功提示；如果超过指定次数，pingServer 直接终止 API Server 进程
 func pingServer() error {
 	for i := 0; i < 2; i++ {
-		// Ping the server by sending a GET request to `/health`.
+		// 向 /sd/health 接口发送 GET 请求
 		resp, err := http.Get("http://127.0.0.1:8080" + "/sd/health")
 		if err == nil && resp.StatusCode == 200 {
 			return nil
 		}
 
-		// Sleep for a second to continue the next ping.
+		// Sleep 1秒后再次执行检查
 		log.Print("Waiting for the router, retry in 1 second.")
 		time.Sleep(time.Second)
 	}
