@@ -4,6 +4,7 @@ import (
 	"configuration-read/config"
 	"configuration-read/router"
 	"errors"
+	"fmt"
 	"log"
 	"net/http"
 	"time"
@@ -30,6 +31,11 @@ func main() {
 		panic(err)
 	}
 
+	// 验证热更新：修改配置文件中 runmode 的值，观察控制台输出
+	for {
+		fmt.Println(viper.GetString("runmode"))
+		time.Sleep(4 * time.Second)
+	}
 	// gin 框架提供了三种模式（debug、release、test）模式分别用于线下线上不同场景，此处从配置文件中获取 runmode
 	gin.SetMode(viper.GetString("runmode"))
 
