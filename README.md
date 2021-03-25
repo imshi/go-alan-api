@@ -13,6 +13,7 @@
 
 ---
 #### 目录说明
-- **sample-api**：实现一个基础的RESTfulAPI服务器
-- **configuration-read**：使用Viper进行配置文件读取
+- **sample-api**：实现一个基础的 RESTfulAPI 服务器
+- **configuration-read**：使用 Viper 包进行配置文件读取
   - 调试运行示例(Linux)：go run main.go -c /tmp/apidemo/config.yaml
+- **log-record**：使用 lexkong/log 包进行日志输出格式定制
