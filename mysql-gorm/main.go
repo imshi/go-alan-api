@@ -5,8 +5,9 @@ package main
 ///////////////////////
 import (
 	"errors"
-	"log-record/config"
-	"log-record/router"
+	"mysql-gorm/config"
+	"mysql-gorm/model"
+	"mysql-gorm/router"
 	"net/http"
 	"time"
 
@@ -31,11 +32,12 @@ func main() {
 	pflag.Parse()
 
 	// 初始化来自 config 私有包的配置
-	// cfg 变量值从命令行 flag 传入，可以传值，比如 ./log-record -c config.yaml；也可以为空，如果为空会默认读取 conf/config.yaml
+	// cfg 变量值从命令行 flag 传入，可以传值，比如 ./mysql-gorm -c config.yaml；也可以为空，如果为空会默认读取 conf/config.yaml
 	if err := config.Init(*cfg); err != nil {
 		panic(err)
 	}
 
+	model.DB.Init()
 	// 验证热更新：修改配置文件中 runmode 的值，观察控制台输出（该 for 循环会阻塞程序向下运行，验证完毕及时剔除，否则 for 循环以下代码不会执行）
 	// for {
 	// 	fmt.Println(viper.GetString("runmode"))

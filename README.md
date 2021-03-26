@@ -17,3 +17,4 @@
 - **configuration-read**：使用 Viper 包进行配置文件读取
   - 调试运行示例(Linux)：`go run main.go -c /tmp/apidemo/config.yaml`
 - **log-record**：使用 lexkong/log 包进行日志输出格式定制
+- **mysql-gorm**：通过v2版本的 gorm 连接 mysql 数据库

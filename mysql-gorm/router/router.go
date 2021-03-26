@@ -3,8 +3,8 @@ package router
 import (
 	"net/http"
 
-	"log-record/handler/sd"
-	"log-record/router/middleware"
+	"mysql-gorm/handler/sd"
+	"mysql-gorm/router/middleware"
 
 	"github.com/gin-gonic/gin"
 )
