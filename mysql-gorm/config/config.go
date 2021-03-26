@@ -1,10 +1,13 @@
 package config
 
 import (
+	"io"
+	"log"
+	"os"
 	"strings"
 
 	"github.com/fsnotify/fsnotify"
-	"github.com/lexkong/log"
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )
 
@@ -55,18 +58,13 @@ func (c *Config) initConfig() error {
 
 // 结构体方法二：设置日志输出格式
 func (c *Config) initLog() {
-	passLagerCfg := log.PassLagerCfg{
-		Writers:       viper.GetString("log.writers"),
-		LoggerLevel:   viper.GetString("log.logger_level"),
-		LoggerFile:    viper.GetString("log.logger_file"),
-		LogFormatText: viper.GetBool("log.log_format_text"),
-		RollingPolicy: viper.GetString("log.rollingPolicy"),
-		LogRotateDate: viper.GetInt("log.log_rotate_date"),
-		LogRotateSize: viper.GetInt("log.log_rotate_size"),
-		// 最后一行也要逗号结尾
-		LogBackupCount: viper.GetInt("log.log_backup_count"),
+
+	// 输出日志到文本文件
+	writerFile, err := os.OpenFile("log-record.log", os.O_WRONLY|os.O_CREATE, 0755)
+	if err != nil {
+		log.Fatalf("create log file failed:%v", err)
 	}
-	log.InitWithConfig(&passLagerCfg)
+	logrus.SetOutput(io.Writer(writerFile))
 }
 
 // 结构体方法三：监控配置文件变化并热加载程序
@@ -76,6 +74,6 @@ func (c *Config) watchConfig() {
 	viper.OnConfigChange(func(e fsnotify.Event) {
 		// 配置文件发生变更之后会调用的回调函数
 		// log.Printf("Config file changed: %s", e.Name)
-		log.Infof("Config file changed: %s", e.Name)
+		logrus.Infof("Config file changed: %s", e.Name)
 	})
 }

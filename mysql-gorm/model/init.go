@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/lexkong/log"
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 
 	"gorm.io/driver/mysql"
@@ -20,10 +20,10 @@ var DB *Database
 
 // openDB() 函数调用 gorm.Open() 来建立一个数据库连接
 func openDB(username, password, addr, dbname string) *gorm.DB {
-	config := fmt.Sprintf("%s:%s@tcp(%s)/%s?chartset=utf8&parseTime=%t&loc=%s", username, password, addr, dbname, true, "Local")
+	config := fmt.Sprintf("%s:%s@tcp(%s)/%s?character_set_server=utf8&parseTime=%t&loc=%s", username, password, addr, dbname, true, "Local")
 	db, err := gorm.Open(mysql.Open(config), &gorm.Config{})
 	if err != nil {
-		log.Errorf(err, "Database connection failed. Database name: %s", dbname)
+		logrus.Errorf("%q. Database connection failed. Database name: %s", err, dbname)
 	}
 
 	setupDB(db)
@@ -35,7 +35,7 @@ func setupDB(db *gorm.DB) {
 	// db.LogMode(viper.GetBool("gormlog"))
 	advanceDB, err := db.DB()
 	if err != nil {
-		log.Fatal("Database connection pools set failed", err)
+		logrus.Fatal("Database connection pools set failed", err)
 	}
 	// 连接池配置
 	// SetMaxIdleConns设置空闲连接池中连接的最大数量

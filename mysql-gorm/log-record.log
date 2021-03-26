@@ -1,0 +1,4 @@
+time="2021-03-26T18:31:26+08:00" level=info msg="Start to listening the incoming requests on http address: :8080"
+time="2021-03-26T18:31:27+08:00" level=info msg="The router has been deployed successfully."
+"Start to listening the incoming requests on http address: :8080"
+time="2021-03-26T18:24:34+08:00" level=info msg="The router has been deployed successfully."

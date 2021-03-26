@@ -12,7 +12,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/lexkong/log"
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
 )
@@ -65,14 +65,14 @@ func main() {
 	// 通过访问 pingServer() 函数 验证 API Server 是否工作正常
 	go func() {
 		if err := pingServer(); err != nil {
-			log.Fatal("The router has no response, or it might took too long to start up.", err)
+			logrus.Fatal("The router has no response, or it might took too long to start up.", err)
 		}
-		log.Info("The router has been deployed successfully.")
+		logrus.Info("The router has been deployed successfully.")
 	}()
 
 	// 通过 viper 读取配置文件中设置的端口（addr）
-	log.Infof("Start to listening the incoming requests on http address: %s", viper.GetString("addr"))
-	log.Info(http.ListenAndServe(viper.GetString("addr"), g).Error())
+	logrus.Infof("Start to listening the incoming requests on http address: %s", viper.GetString("addr"))
+	logrus.Info(http.ListenAndServe(viper.GetString("addr"), g).Error())
 }
 
 // pingServer函数通过访问 /sd/health接口验证 API Server 是否工作正常
@@ -86,7 +86,7 @@ func pingServer() error {
 		}
 
 		// Sleep 1秒后再次执行检查
-		log.Info("Waiting for the router, retry in 1 second.")
+		logrus.Info("Waiting for the router, retry in 1 second.")
 		time.Sleep(time.Second)
 	}
 	return errors.New("Cannot connect to the router.")
