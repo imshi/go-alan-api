@@ -1,12 +1,12 @@
 package config
 
 import (
-	"io"
 	"log"
-	"os"
 	"strings"
+	"time"
 
 	"github.com/fsnotify/fsnotify"
+	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )
@@ -56,15 +56,25 @@ func (c *Config) initConfig() error {
 	return nil
 }
 
-// 结构体方法二：设置日志输出格式
+// 结构体方法二：设置日志输出格式 - 按日期分割日志文件
 func (c *Config) initLog() {
-
-	// 输出日志到文本文件
-	writerFile, err := os.OpenFile("log-record.log", os.O_WRONLY|os.O_CREATE, 0755)
+	content, err := rotatelogs.New("server.log"+"-%Y%m%d%H%M",
+		rotatelogs.WithLinkName("cli.log"), // 生成软链，指向最新日志文件
+		// WithMaxAge 和 WithRotationCount 两者不能同时设置
+		rotatelogs.WithMaxAge(6*time.Minute), //日志保留时长：最小单位为分钟
+		// WithRotationCount(5),        // 日志保留份数：默认7份，大于7份或到了清理时间触发清理
+		rotatelogs.WithRotationTime(time.Minute), //轮转周期：默认1分钟（最小1分钟）分隔一次；
+	)
 	if err != nil {
-		log.Fatalf("create log file failed:%v", err)
+		log.Printf("failed to create rotatelogs: %s", err)
+		return
 	}
-	logrus.SetOutput(io.Writer(writerFile))
+	// 在输出日志中添加文件名和方法信息
+	// logrus.SetReportCaller(true)
+	// 设置日志为 json 格式（默认为文本格式）
+	logrus.SetFormatter(&logrus.JSONFormatter{})
+	// 输出日志到文本文件
+	logrus.SetOutput(content)
 }
 
 // 结构体方法三：监控配置文件变化并热加载程序
@@ -74,6 +84,7 @@ func (c *Config) watchConfig() {
 	viper.OnConfigChange(func(e fsnotify.Event) {
 		// 配置文件发生变更之后会调用的回调函数
 		// log.Printf("Config file changed: %s", e.Name)
+		// log.Infof("Config file changed: %s", e.Name)
 		logrus.Infof("Config file changed: %s", e.Name)
 	})
 }

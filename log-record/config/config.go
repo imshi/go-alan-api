@@ -1,12 +1,12 @@
 package config
 
 import (
-	"io"
 	"log"
-	"os"
 	"strings"
+	"time"
 
 	"github.com/fsnotify/fsnotify"
+	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )
@@ -56,31 +56,41 @@ func (c *Config) initConfig() error {
 	return nil
 }
 
-// // 结构体方法二：设置日志输出格式（lexkong/log 包已经废弃，弃用）
+// // 结构体方法二：设置日志输出格式 - 日志文件不分割的写法
 // func (c *Config) initLog() {
-// 	passLagerCfg := log.PassLagerCfg{
-// 		Writers:       viper.GetString("log.writers"),
-// 		LoggerLevel:   viper.GetString("log.logger_level"),
-// 		LoggerFile:    viper.GetString("log.logger_file"),
-// 		LogFormatText: viper.GetBool("log.log_format_text"),
-// 		RollingPolicy: viper.GetString("log.rollingPolicy"),
-// 		LogRotateDate: viper.GetInt("log.log_rotate_date"),
-// 		LogRotateSize: viper.GetInt("log.log_rotate_size"),
-// 		// 最后一行也要逗号结尾
-// 		LogBackupCount: viper.GetInt("log.log_backup_count"),
+// 	// 默认情况下，日志输出到io.Stderr。可以调用logrus.SetOutput传入一个io.Writer参数，后续调用相关方法日志将写到io.Writer中，支持定义多个writer，使用io.MultiWriter， 同时将日志写到bytes.Buffer、标准输出和文件中
+// 	// 这里只输出日志到文本文件
+// 	writerFile, err := os.OpenFile("log-record.log", os.O_WRONLY|os.O_CREATE, 0755)
+// 	if err != nil {
+// 		log.Fatalf("create log file failed:%v", err)
 // 	}
-// 	log.InitWithConfig(&passLagerCfg)
+// 	// 在输出日志中添加文件名和方法信息
+// 	logrus.SetReportCaller(true)
+// 	// 设置日志为 json 格式（默认为文本格式）
+// 	logrus.SetFormatter(&logrus.JSONFormatter{})
+// 	// 输出日志到文本文件
+// 	logrus.SetOutput(io.Writer(writerFile))
 // }
 
-// 结构体方法二：设置日志输出格式
+// 结构体方法二：设置日志输出格式 - 按日期分割日志文件
 func (c *Config) initLog() {
-	// 默认情况下，日志输出到io.Stderr。可以调用logrus.SetOutput传入一个io.Writer参数，后续调用相关方法日志将写到io.Writer中，支持定义多个writer，使用io.MultiWriter， 同时将日志写到bytes.Buffer、标准输出和文件中
-	// 这里只输出日志到文本文件
-	writerFile, err := os.OpenFile("log-record.log", os.O_WRONLY|os.O_CREATE, 0755)
+	content, err := rotatelogs.New("server.log"+"-%Y%m%d%H%M",
+		rotatelogs.WithLinkName("cli.log"), // 生成软链，指向最新日志文件
+		// WithMaxAge 和 WithRotationCount 两者不能同时设置
+		rotatelogs.WithMaxAge(6*time.Minute), //日志保留时长：最小单位为分钟
+		// WithRotationCount(5),        // 日志保留份数：默认7份，大于7份或到了清理时间触发清理
+		rotatelogs.WithRotationTime(time.Minute), //轮转周期：默认1分钟（最小1分钟）分隔一次；
+	)
 	if err != nil {
-		log.Fatalf("create log file failed:%v", err)
+		log.Printf("failed to create rotatelogs: %s", err)
+		return
 	}
-	logrus.SetOutput(io.Writer(writerFile))
+	// 在输出日志中添加文件名和方法信息
+	logrus.SetReportCaller(true)
+	// 设置日志为 json 格式（默认为文本格式）
+	logrus.SetFormatter(&logrus.JSONFormatter{})
+	// 输出日志到文本文件
+	logrus.SetOutput(content)
 }
 
 // 结构体方法三：监控配置文件变化并热加载程序

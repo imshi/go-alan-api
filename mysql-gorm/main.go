@@ -65,6 +65,7 @@ func main() {
 	// 通过访问 pingServer() 函数 验证 API Server 是否工作正常
 	go func() {
 		if err := pingServer(); err != nil {
+			// 致命错误，输出日志后，程序退出
 			logrus.Fatal("The router has no response, or it might took too long to start up.", err)
 		}
 		logrus.Info("The router has been deployed successfully.")
