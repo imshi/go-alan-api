@@ -59,7 +59,7 @@ func (c *Config) initConfig() error {
 // 结构体方法二：设置日志输出格式 - 按日期分割日志文件
 func (c *Config) initLog() {
 	content, err := rotatelogs.New("server.log"+"-%Y%m%d%H%M",
-		rotatelogs.WithLinkName("cli.log"), // 生成软链，指向最新日志文件
+		rotatelogs.WithLinkName("server.log"), // 生成软链，指向最新日志文件
 		// WithMaxAge 和 WithRotationCount 两者不能同时设置
 		rotatelogs.WithMaxAge(6*time.Minute), //日志保留时长：最小单位为分钟
 		// WithRotationCount(5),        // 日志保留份数：默认7份，大于7份或到了清理时间触发清理
