@@ -26,6 +26,7 @@ func Create(c *gin.Context) {
 
 	logrus.Debugf("username is :[%s],password is [%s]", r.Username, r.Password)
 	if r.Username == "" {
+		// 这里前后台日志不一样：后台日志中会输出敏感信息 username can not found in db: x.x.x.x，但是返回给用户的 message （{"code":20102,"message":"The user was not found. This is add message."}）不包含这些敏感信息，可以供前端直接对外展示
 		err = errno.New(errno.ErrUserNotFound, fmt.Errorf("username can not found in dh: x.x.x.x")).Add("This is add message.")
 		logrus.Errorf("Get an error：%s", err)
 	}
