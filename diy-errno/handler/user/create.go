@@ -1,12 +1,16 @@
+// 用户模块
 package user
 
 import (
+	"diy-errno/pkg/errno"
 	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/lexkong/log"
 )
 
+// 用户模块业务处理函数 1：创建用户
 func Create(c *gin.Context) {
 	var r struct {
 		Username string `json:"username"`
@@ -14,6 +18,7 @@ func Create(c *gin.Context) {
 	}
 
 	var err error
+	// 使用 Bind 函数对 gin 的 Context 对象传参
 	if err = c.Bind(&r); err != nil {
 		c.JSON(http.StatusOK, gin.H{"error": errno.ErrBind})
 		return
