@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"diy-errno/handler/sd"
+	"diy-errno/handler/user"
 	"diy-errno/router/middleware"
 
 	"github.com/gin-gonic/gin"
