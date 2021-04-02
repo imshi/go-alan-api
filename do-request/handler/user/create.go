@@ -2,7 +2,7 @@
 package user
 
 import (
-	"diy-errno/pkg/errno"
+	"do-request/pkg/errno"
 	"fmt"
 	"net/http"
 
