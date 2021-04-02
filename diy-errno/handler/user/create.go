@@ -18,7 +18,7 @@ func Create(c *gin.Context) {
 	}
 
 	var err error
-	// 使用 Bind 函数对 gin 的 Context 对象传参
+	// 将消息体 - body 作为指定的格式（这里是JSON）解析到 gin 的 Context 对象中
 	if err = c.Bind(&r); err != nil {
 		c.JSON(http.StatusOK, gin.H{"error": errno.ErrBind})
 		return
