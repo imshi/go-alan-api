@@ -91,6 +91,8 @@ func (c *Config) initLog() {
 	logrus.SetFormatter(&logrus.JSONFormatter{})
 	// 输出日志到文本文件
 	logrus.SetOutput(content)
+	// 设置打印日志的最低等级，所有等级：Trace、Debug、Info、Warn、Error、Fatal、Panic
+	logrus.SetLevel(logrus.TraceLevel)
 }
 
 // 结构体方法三：监控配置文件变化并热加载程序
