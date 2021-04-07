@@ -6,7 +6,6 @@ import (
 	"do-curd/model"
 	"do-curd/pkg/errno"
 	"do-curd/util"
-	"fmt"
 
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
@@ -26,22 +25,28 @@ func Create(c *gin.Context) {
 		Username: r.Username,
 		Password: r.Password,
 	}
-	admin2 := c.Param("username")
-	logrus.Infof("URL username: %s", admin2)
-	if r.Username == "" {
-		// 前后台日志不一样：后台日志中会输出敏感信息 username can not found in db: x.x.x.x，但是返回给用户的 message （{"code":20102,"message":"The user was not found. This is add message."}）不包含这些敏感信息，可以供前端直接对外展示
-		// 封装了自己的返回函数，通过统一的返回函数 SendResponse 来格式化返回（这里控制的是后台日志输出）
-		SendResponse(c, errno.New(errno.ErrUserNotFound, fmt.Errorf("username can not found in db: x.x.x.x")), nil)
+	// 数据验证
+	if err := u.Validate(); err != nil {
+		SendResponse(c, errno.ErrValidation, nil)
 		return
 	}
 
-	if r.Password == "" {
-		SendResponse(c, fmt.Errorf("password is empty"), nil)
+	//密码加密
+	if err := u.Encrypt(); err != nil {
+		SendResponse(c, errno.ErrEncrypt, nil)
+		return
+	}
+
+	// 插入用户数据到数据库
+	if err := u.Create(); err != nil {
+		SendResponse(c, errno.ErrDatabase, nil)
+		return
 	}
 
 	rsp := CreateResponse{
 		Username: r.Username,
 	}
+
 	// 用户浏览器前端展示
 	SendResponse(c, nil, rsp)
 }

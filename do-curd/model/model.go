@@ -9,7 +9,7 @@ import (
 type BaseModel struct {
 	Id        uint64     `gorm:"primary_key;AUTO_INCREMENT;column:id" json:"-"`
 	CreatedAt time.Time  `gorm:"column:createdAt" json:"-"`
-	UpdateAt  time.Time  `gorm:"column:updateAt" json:"-"`
+	UpdatedAt time.Time  `gorm:"column:updatedAt" json:"-"`
 	DeleteAt  *time.Time `gorm:"column:deleteAt" sql:"index" json:"-"`
 }
 
@@ -19,7 +19,7 @@ type UserInfo struct {
 	SayHello  string `json:"sayHello"`
 	Password  string `json:"password"`
 	CreatedAt string `json:"createdAt"`
-	UpdateAt  string `json:"updateAt"`
+	UpdatedAt string `json:"updatedAt"`
 }
 
 type UserList struct {
