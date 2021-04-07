@@ -21,7 +21,9 @@ func ListUser(username string, offset, limit int) ([]*model.UserInfo, int64, err
 
 	wg := sync.WaitGroup{}
 	userList := model.UserList{
-		Lock:  new(sync.Mutex),
+		// 通过加锁保证更新同一个变量时的数据一致性
+		Lock: new(sync.Mutex),
+		// 查询的列表通常需要按时间顺序进行排序，一般数据库查询后的列表已经排过序了，但是为了减少延时，程序中用了并发，这时候会打乱排序，所以通过 IdMap 来记录并发处理前的顺序，处理后再重新复位
 		IdMap: make(map[uint64]*model.UserInfo, len(users)),
 	}
 
@@ -34,6 +36,7 @@ func ListUser(username string, offset, limit int) ([]*model.UserInfo, int64, err
 		go func(u *model.UserModel) {
 			defer wg.Done()
 
+			// 生成 shordId，问下文模拟数据处理做准备
 			shortId, err := util.GenShortId()
 			if err != nil {
 				errChan <- err
@@ -42,6 +45,7 @@ func ListUser(username string, offset, limit int) ([]*model.UserInfo, int64, err
 
 			userList.Lock.Lock()
 			defer userList.Lock.Unlock()
+			// 通过对每个用户返回一个sqyHello字段模拟数据处理
 			userList.IdMap[u.Id] = &model.UserInfo{
 				Id:        u.Id,
 				Username:  u.Username,
