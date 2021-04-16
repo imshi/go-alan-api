@@ -33,7 +33,7 @@ func DeleteUser(id uint64) error {
 
 // 更新用户信息
 func (u *UserModel) Update() error {
-	return DB.Self.Save(u).Error
+	return DB.Self.Save(&u).Error
 }
 
 // 通过用户标识(username)获取用户账户信息
