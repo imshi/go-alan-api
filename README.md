@@ -18,3 +18,6 @@
   - 调试运行示例(Linux)：`go run main.go -c /tmp/apidemo/config.yaml`
 - **log-record**：使用 lexkong/log 包进行日志输出格式定制
 - **mysql-gorm**：通过v2版本的 gorm 连接 mysql 数据库
+- **diy-errno**：自定义错误码，并且前后台展示不同内容
+- **do-request**：读取和返回 HTTP 请求
+- **do-curd**：用户业务逻辑处理（API核心功能和数据库增删改查）
