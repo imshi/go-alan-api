@@ -1,4 +1,4 @@
-### golang企业级RESTful API实践记录
+### golang企业级RESTful API开发实践
 #### 部分说明：
 - 使用 Modules 包管理器管理 packages 依赖，使用说明如下（以sample-api为例）：
 
