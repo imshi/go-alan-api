@@ -13,11 +13,11 @@
 
 ---
 #### 目录说明
-- **sample-api**：实现一个基础的 RESTfulAPI 服务器
-- **configuration-read**：使用 Viper 包进行配置文件读取
+1. **sample-api**：实现一个基础的 RESTfulAPI 服务器
+2. **configuration-read**：使用 Viper 包进行配置文件读取
   - 调试运行示例(Linux)：`go run main.go -c /tmp/apidemo/config.yaml`
-- **log-record**：使用 lexkong/log 包进行日志输出格式定制
-- **mysql-gorm**：通过v2版本的 gorm 连接 mysql 数据库
-- **diy-errno**：自定义错误码，并且前后台展示不同内容
-- **do-request**：读取和返回 HTTP 请求
-- **do-curd**：用户业务逻辑处理（API核心功能和数据库增删改查）
+3. **log-record**：使用 lexkong/log 包进行日志输出格式定制
+4. **mysql-gorm**：通过v2版本的 gorm 连接 mysql 数据库
+5. **diy-errno**：自定义错误码，并且前后台展示不同内容
+6. **do-request**：读取和返回 HTTP 请求
+7. **do-curd**：用户业务逻辑处理（API核心功能和数据库增删改查）
