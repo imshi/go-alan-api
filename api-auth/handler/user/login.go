@@ -12,7 +12,7 @@ import (
 
 func Login(c *gin.Context) {
 
-	// 绑定数据模型
+	// 绑定用户数据模型
 	var u model.UserModel
 	if err := c.Bind(&u); err != nil {
 		SendResponse(c, errno.ErrBind, nil)
@@ -27,7 +27,7 @@ func Login(c *gin.Context) {
 	}
 
 	// 登录密码验证
-	if err = auth.Compare(d.Password, u.Password); err != nil {
+	if err := auth.Compare(d.Password, u.Password); err != nil {
 		SendResponse(c, errno.ErrPasswordIncorrect, nil)
 		return
 	}
@@ -39,5 +39,4 @@ func Login(c *gin.Context) {
 	}
 
 	SendResponse(c, nil, model.Token{Token: t})
-
 }
