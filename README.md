@@ -21,3 +21,5 @@
 5. **diy-errno**：自定义错误码，并且前后台展示不同内容
 6. **do-request**：读取和返回 HTTP 请求
 7. **do-curd**：用户业务逻辑处理（API核心功能和数据库增删改查）
+8. **gin-middleware**：HTTP 调用添加自定义处理逻辑（添加唯一请求 ID）
+9. **api-auth**：使用JWT进行 API 身份验证
