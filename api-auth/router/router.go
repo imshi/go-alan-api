@@ -3,9 +3,9 @@ package router
 import (
 	"net/http"
 
-	"gin-middleware/handler/sd"
-	"gin-middleware/handler/user"
-	"gin-middleware/router/middleware"
+	"api-auth/handler/sd"
+	"api-auth/handler/user"
+	"api-auth/router/middleware"
 
 	"github.com/gin-gonic/gin"
 )
@@ -25,6 +25,8 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		c.String(http.StatusNotFound, "The incorrect API route.")
 	})
 
+	// 登录认证功能接口
+	g.POST("/login", user.Login)
 	// 用户操作的路由配置
 	u := g.Group("/v1/user")
 	{

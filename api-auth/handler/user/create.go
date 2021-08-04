@@ -2,10 +2,10 @@
 package user
 
 import (
-	. "gin-middleware/handler"
-	"gin-middleware/model"
-	"gin-middleware/pkg/errno"
-	"gin-middleware/util"
+	. "api-auth/handler"
+	"api-auth/model"
+	"api-auth/pkg/errno"
+	"api-auth/util"
 
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"

@@ -1,9 +1,9 @@
 package user
 
 import (
-	. "gin-middleware/handler"
-	"gin-middleware/pkg/errno"
-	"gin-middleware/service"
+	. "api-auth/handler"
+	"api-auth/pkg/errno"
+	"api-auth/service"
 
 	"github.com/gin-gonic/gin"
 )

@@ -1,8 +1,8 @@
 package service
 
 import (
-	"gin-middleware/model"
-	"gin-middleware/util"
+	"api-auth/model"
+	"api-auth/util"
 	"fmt"
 	"sync"
 )

@@ -5,10 +5,10 @@ package main
 ///////////////////////
 import (
 	"errors"
-	"gin-middleware/config"
-	"gin-middleware/model"
-	"gin-middleware/router"
-	"gin-middleware/router/middleware"
+	"api-auth/config"
+	"api-auth/model"
+	"api-auth/router"
+	"api-auth/router/middleware"
 	"net/http"
 	"time"
 
@@ -33,7 +33,7 @@ func main() {
 	pflag.Parse()
 
 	// 初始化来自 config 私有包的配置
-	// cfg 变量值从命令行 flag 传入，可以传值，比如 ./gin-middleware -c config.yaml；也可以为空，如果为空会默认读取 conf/config.yaml
+	// cfg 变量值从命令行 flag 传入，可以传值，比如 ./api-auth -c config.yaml；也可以为空，如果为空会默认读取 conf/config.yaml
 	if err := config.Init(*cfg); err != nil {
 		panic(err)
 	}

@@ -1,9 +1,9 @@
 package user
 
 import (
-	. "gin-middleware/handler"
-	"gin-middleware/model"
-	"gin-middleware/pkg/errno"
+	. "api-auth/handler"
+	"api-auth/model"
+	"api-auth/pkg/errno"
 	"strconv"
 
 	"github.com/gin-gonic/gin"

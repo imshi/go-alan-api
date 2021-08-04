@@ -2,8 +2,8 @@
 package model
 
 import (
-	"gin-middleware/pkg/auth"
-	"gin-middleware/pkg/constvar"
+	"api-auth/pkg/auth"
+	"api-auth/pkg/constvar"
 	"fmt"
 
 	validator "gopkg.in/go-playground/validator.v9"

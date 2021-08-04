@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"gin-middleware/pkg/errno"
+	"api-auth/pkg/errno"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
